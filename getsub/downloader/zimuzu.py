@@ -38,6 +38,8 @@ class ZimuzuDownloader(Downloader):
             r = s.get(ZimuzuDownloader.search_url.format(keyword),
                       headers=Downloader.header, timeout=10)
             bs_obj = BeautifulSoup(r.text, 'html.parser')
+            if not bs_obj.find('div', {'class': 'article-tab'}):
+                break
             tab_text = bs_obj.find('div', {'class': 'article-tab'}).text
             tab_text = tab_text.encode('utf8') if py == 2 else tab_text
             if '字幕(0)' not in tab_text:
